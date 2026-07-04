@@ -1,0 +1,14 @@
+# Dependency folders (never push these to GitHub)
+node_modules/
+
+# Cypress specific test artifacts
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# Environmental variables & secret keys
+cypress.env.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
