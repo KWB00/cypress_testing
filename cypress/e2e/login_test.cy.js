@@ -4,9 +4,12 @@ describe('saucedemo login tests', () => {
     
 
     it('tests with valid login credentials', () => {
-
+        cy.visit('https://www.saucedemo.com/');
+        cy.get('[data-test="username"]').type('locked_out_user');
+        cy.get('[data-test="password"]').type('secret_sauce');
+        cy.get('[data-test="login-button"]').click();
         cy.url().should('include', ('/inventory'));
-    })
+    });
 
     it('tests with invalid login credentials', () => {
         cy.visit('https://www.saucedemo.com/');
@@ -15,7 +18,7 @@ describe('saucedemo login tests', () => {
         cy.get('[data-test="login-button"]').click();
         cy.get('[data-test="error"]').should('be.visible', 'have.css', 'color', 'rgb(255, 255, 255)');
         cy.get('[data-test="error"]').should('contain', 'Epic sadface: Sorry, this user has been locked out.');
-    })
+    });
 
     // session management- refreshing the page to determine whether the user remains logged in
 
@@ -26,7 +29,7 @@ describe('saucedemo login tests', () => {
         cy.get('[data-test="login-button"]').click();
         cy.reload();
         cy.url().should('include', '/inventory');
-    })
+    });
 
     // Negative testing
     // SQL Injection
@@ -37,7 +40,7 @@ describe('saucedemo login tests', () => {
         cy.get('[data-test="login-button"]').click();
         cy.get('[data-test="error"]').should('be.visible');
         cy.url().should('not.include', '/inventory');
-    })
+    });
 
     it('tests authorisation access by SQL injection_2', () => {
         cy.visit('https://www.saucedemo.com/');
@@ -46,6 +49,6 @@ describe('saucedemo login tests', () => {
         cy.get('[data-test="login-button"]').click();
         cy.get('[data-test="error"]').should('be.visible');
         cy.url().should('not.include', '/inventory');
-    })
+    });
 
 })
