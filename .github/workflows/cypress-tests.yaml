@@ -1,18 +1,22 @@
 name: Cypress Tests
 
-# Trigger this pipeline automatically every single time code is pushed to the main branch
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Codebase Repository
-        uses: actions/checkout@v4
 
-      - name: Run Cypress Automated Suites Cloud-side
-        uses: cypress-io/github-action@v6
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          build: npm run build
-          # This triggers our headless execution script automatically
-          command: npm run cy:run
+          node-version: 24
+
+      - run: npm ci
+
+      - uses: cypress-io/github-action@v6
